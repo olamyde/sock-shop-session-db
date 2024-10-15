@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: session-db
+  name: {{ template "session-db.fullname" . }}
   labels:
     name: session-db
   namespace: sock-shop
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: session-db
-        image: redis:alpine
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         ports:
         - name: redis
           containerPort: 6379
